@@ -1,0 +1,11 @@
+C:\cursoC#\TransferData\TransferData.Shared\bin\Debug\net8.0\TransferData.Shared.deps.json
+C:\cursoC#\TransferData\TransferData.Shared\bin\Debug\net8.0\TransferData.Shared.dll
+C:\cursoC#\TransferData\TransferData.Shared\bin\Debug\net8.0\TransferData.Shared.pdb
+C:\cursoC#\TransferData\TransferData.Shared\obj\Debug\net8.0\TransferData.Shared.GeneratedMSBuildEditorConfig.editorconfig
+C:\cursoC#\TransferData\TransferData.Shared\obj\Debug\net8.0\TransferData.Shared.AssemblyInfoInputs.cache
+C:\cursoC#\TransferData\TransferData.Shared\obj\Debug\net8.0\TransferData.Shared.AssemblyInfo.cs
+C:\cursoC#\TransferData\TransferData.Shared\obj\Debug\net8.0\TransferData.Shared.csproj.CoreCompileInputs.cache
+C:\cursoC#\TransferData\TransferData.Shared\obj\Debug\net8.0\TransferData.Shared.dll
+C:\cursoC#\TransferData\TransferData.Shared\obj\Debug\net8.0\refint\TransferData.Shared.dll
+C:\cursoC#\TransferData\TransferData.Shared\obj\Debug\net8.0\TransferData.Shared.pdb
+C:\cursoC#\TransferData\TransferData.Shared\obj\Debug\net8.0\ref\TransferData.Shared.dll

@@ -1,0 +1,152 @@
+﻿using FastMember;
+using Microsoft.Data.SqlClient;
+using System.Diagnostics;
+using TransferData.Shared;
+
+const int BATCH_SIZE = 200_000;
+
+string rootPath = @"C:\Users\beatriz.francisca\Downloads\Android_v2";
+var logFiles = Directory.GetFiles(rootPath, "applogcat.log", SearchOption.AllDirectories);
+
+long total = 0;
+Stopwatch sw = Stopwatch.StartNew();
+
+using var conn = new SqlConnection(
+    @"Server=localhost\SQLEXPRESS01;Database=InternalProject;Trusted_Connection=True;TrustServerCertificate=True;");
+conn.Open();
+
+using var bulk = new SqlBulkCopy(
+    conn,
+    SqlBulkCopyOptions.TableLock,
+    null)
+{
+    DestinationTableName = "AndroidLog",
+    BatchSize = BATCH_SIZE,
+    BulkCopyTimeout = 0
+};
+
+bulk.ColumnMappings.Add("LogDate", "LogDate");
+bulk.ColumnMappings.Add("Pid", "Pid");
+bulk.ColumnMappings.Add("Tid", "Tid");
+bulk.ColumnMappings.Add("Level", "Level");
+bulk.ColumnMappings.Add("Component", "Component");
+bulk.ColumnMappings.Add("Content", "Content");
+
+List<AndroidLog> buffer = new(BATCH_SIZE);
+
+foreach (var file in logFiles)
+{
+    using var reader = new StreamReader(file);
+
+    string? line;
+    while ((line = reader.ReadLine()) != null)
+    {
+        var log = ParseOptimized(line);
+        if (log == null) continue;
+
+        buffer.Add(log);
+
+        if (buffer.Count >= BATCH_SIZE)
+        {
+            WriteBatch(bulk, buffer);
+            total += buffer.Count;
+            buffer.Clear();
+
+            Console.WriteLine($"{total:N0} registros | {(total / sw.Elapsed.TotalSeconds):N0} reg/s");
+        }
+    }
+}
+
+if (buffer.Count > 0)
+{
+    WriteBatch(bulk, buffer);
+    total += buffer.Count;
+}
+
+sw.Stop();
+Console.WriteLine($"FINALIZADO: {total:N0} registros em {sw.Elapsed.TotalSeconds:N2}s");
+
+static void WriteBatch(SqlBulkCopy bulk, List<AndroidLog> batch)
+{
+    using var reader = ObjectReader.Create(
+        batch,
+        "LogDate",
+        "Pid",
+        "Tid",
+        "Level",
+        "Component",
+        "Content"
+    );
+
+    bulk.WriteToServer(reader);
+}
+
+
+static AndroidLog? ParseOptimized(string line)
+{
+    ReadOnlySpan<char> span = line.AsSpan().Trim();
+
+    if (span.Length < 30)
+        return null;
+
+    int colon = span.Slice(20).IndexOf(':');
+    if (colon == -1)
+        return null;
+
+    colon += 20;
+
+    try
+    {
+        int s1 = span.IndexOf(' ');
+        if (s1 < 0) return null;
+
+        int s2 = span.Slice(s1 + 1).IndexOf(' ');
+        if (s2 < 0) return null;
+        s2 += s1 + 1;
+
+        int pStart = s2;
+        while (pStart < span.Length && span[pStart] == ' ') pStart++;
+
+        int pEnd = span.Slice(pStart).IndexOf(' ');
+        if (pEnd < 0) return null;
+        pEnd += pStart;
+
+        if (!int.TryParse(span.Slice(pStart, pEnd - pStart), out int pid))
+            return null;
+
+        int tStart = pEnd;
+        while (tStart < span.Length && span[tStart] == ' ') tStart++;
+
+        int tEnd = span.Slice(tStart).IndexOf(' ');
+        if (tEnd < 0) return null;
+        tEnd += tStart;
+
+        if (!int.TryParse(span.Slice(tStart, tEnd - tStart), out int tid))
+            return null;
+
+        int levelStart = tEnd + 1;
+        int levelEnd = span.Slice(levelStart).IndexOf(' ');
+        if (levelEnd < 0) return null;
+
+        string level = span.Slice(levelStart, levelEnd).Trim().ToString();
+
+        int componentStart = levelStart + levelEnd + 1;
+        string component = span.Slice(componentStart, colon - componentStart).Trim().ToString();
+
+        string content = span.Slice(colon + 1).Trim().ToString();
+
+        return new AndroidLog
+        {
+            LogDate = span.Slice(0, s2).ToString(),
+            Pid = pid,
+            Tid = tid,
+            Level = level,
+            Component = component,
+            Content = content
+        };
+    }
+    catch
+    {
+        return null;
+    }
+}

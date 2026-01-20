@@ -1,0 +1,147 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\cursoC#\\TransferData\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{44B7C42F-6C59-4417-8CAF-257501797D82}|TransferData\\TransferData.Server.csproj|c:\\cursoc#\\transferdata\\transferdata\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{44B7C42F-6C59-4417-8CAF-257501797D82}|TransferData\\TransferData.Server.csproj|solutionrelative:transferdata\\server.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{44B7C42F-6C59-4417-8CAF-257501797D82}|TransferData\\TransferData.Server.csproj|c:\\cursoc#\\transferdata\\transferdata\\migrations\\20260119214913_makeandroidlogheap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{44B7C42F-6C59-4417-8CAF-257501797D82}|TransferData\\TransferData.Server.csproj|solutionrelative:transferdata\\migrations\\20260119214913_makeandroidlogheap.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{44B7C42F-6C59-4417-8CAF-257501797D82}|TransferData\\TransferData.Server.csproj|c:\\cursoc#\\transferdata\\transferdata\\migrations\\20260115213204_increaselimits.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{44B7C42F-6C59-4417-8CAF-257501797D82}|TransferData\\TransferData.Server.csproj|solutionrelative:transferdata\\migrations\\20260115213204_increaselimits.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{44B7C42F-6C59-4417-8CAF-257501797D82}|TransferData\\TransferData.Server.csproj|c:\\cursoc#\\transferdata\\transferdata\\migrations\\20260115210453_initialcreatewithnewschema.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{44B7C42F-6C59-4417-8CAF-257501797D82}|TransferData\\TransferData.Server.csproj|solutionrelative:transferdata\\migrations\\20260115210453_initialcreatewithnewschema.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{44B7C42F-6C59-4417-8CAF-257501797D82}|TransferData\\TransferData.Server.csproj|c:\\cursoc#\\transferdata\\transferdata\\logcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{44B7C42F-6C59-4417-8CAF-257501797D82}|TransferData\\TransferData.Server.csproj|solutionrelative:transferdata\\logcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{4B5D23FD-1E8D-4563-90E8-384ADD23752A}|TransferData.Client\\TransferData.Client.csproj|c:\\cursoc#\\transferdata\\transferdata.client\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{4B5D23FD-1E8D-4563-90E8-384ADD23752A}|TransferData.Client\\TransferData.Client.csproj|solutionrelative:transferdata.client\\client.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{12A506E3-CFD1-44F0-9505-01D8B1772E45}|TransferData.Shared\\TransferData.Shared.csproj|c:\\cursoc#\\transferdata\\transferdata.shared\\androidlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{12A506E3-CFD1-44F0-9505-01D8B1772E45}|TransferData.Shared\\TransferData.Shared.csproj|solutionrelative:transferdata.shared\\androidlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 7,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{e1b7d1f8-9b3c-49b1-8f4f-bfc63a88835d}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "20260119214913_MakeAndroidLogHeap.cs",
+              "DocumentMoniker": "C:\\cursoC#\\TransferData\\TransferData\\Migrations\\20260119214913_MakeAndroidLogHeap.cs",
+              "RelativeDocumentMoniker": "TransferData\\Migrations\\20260119214913_MakeAndroidLogHeap.cs",
+              "ToolTip": "C:\\cursoC#\\TransferData\\TransferData\\Migrations\\20260119214913_MakeAndroidLogHeap.cs",
+              "RelativeToolTip": "TransferData\\Migrations\\20260119214913_MakeAndroidLogHeap.cs",
+              "ViewState": "AgIAABsAAAAAAAAAAAAYwAQAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-19T21:49:14.965Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "20260115213204_IncreaseLimits.cs",
+              "DocumentMoniker": "C:\\cursoC#\\TransferData\\TransferData\\Migrations\\20260115213204_IncreaseLimits.cs",
+              "RelativeDocumentMoniker": "TransferData\\Migrations\\20260115213204_IncreaseLimits.cs",
+              "ToolTip": "C:\\cursoC#\\TransferData\\TransferData\\Migrations\\20260115213204_IncreaseLimits.cs",
+              "RelativeToolTip": "TransferData\\Migrations\\20260115213204_IncreaseLimits.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAAYwAYAAAAWAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T21:32:04.398Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "20260115210453_InitialCreateWithNewSchema.cs",
+              "DocumentMoniker": "C:\\cursoC#\\TransferData\\TransferData\\Migrations\\20260115210453_InitialCreateWithNewSchema.cs",
+              "RelativeDocumentMoniker": "TransferData\\Migrations\\20260115210453_InitialCreateWithNewSchema.cs",
+              "ToolTip": "C:\\cursoC#\\TransferData\\TransferData\\Migrations\\20260115210453_InitialCreateWithNewSchema.cs",
+              "RelativeToolTip": "TransferData\\Migrations\\20260115210453_InitialCreateWithNewSchema.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-15T21:04:54.048Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LogContext.cs",
+              "DocumentMoniker": "C:\\cursoC#\\TransferData\\TransferData\\LogContext.cs",
+              "RelativeDocumentMoniker": "TransferData\\LogContext.cs",
+              "ToolTip": "C:\\cursoC#\\TransferData\\TransferData\\LogContext.cs",
+              "RelativeToolTip": "TransferData\\LogContext.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAACUAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-14T00:02:55.587Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "AndroidLog.cs",
+              "DocumentMoniker": "C:\\cursoC#\\TransferData\\TransferData.Shared\\AndroidLog.cs",
+              "RelativeDocumentMoniker": "TransferData.Shared\\AndroidLog.cs",
+              "ToolTip": "C:\\cursoC#\\TransferData\\TransferData.Shared\\AndroidLog.cs",
+              "RelativeToolTip": "TransferData.Shared\\AndroidLog.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T23:55:40.568Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Server.cs",
+              "DocumentMoniker": "C:\\cursoC#\\TransferData\\TransferData\\Server.cs",
+              "RelativeDocumentMoniker": "TransferData\\Server.cs",
+              "ToolTip": "C:\\cursoC#\\TransferData\\TransferData\\Server.cs",
+              "RelativeToolTip": "TransferData\\Server.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAIkAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T23:44:18.025Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Client.cs",
+              "DocumentMoniker": "C:\\cursoC#\\TransferData\\TransferData.Client\\Client.cs",
+              "RelativeDocumentMoniker": "TransferData.Client\\Client.cs",
+              "ToolTip": "C:\\cursoC#\\TransferData\\TransferData.Client\\Client.cs",
+              "RelativeToolTip": "TransferData.Client\\Client.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-01-13T23:44:07.169Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

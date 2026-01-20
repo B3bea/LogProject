@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "TransferData\\TransferData.Server.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "TransferData.Client\\TransferData.Client.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
