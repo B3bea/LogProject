@@ -42,7 +42,8 @@ foreach (var file in logFiles)
     while ((line = reader.ReadLine()) != null)
     {
         var log = ParseOptimized(line);
-        if (log == null) continue;
+        if (log == null)
+            continue;
 
         buffer.Add(log);
 
@@ -80,8 +81,6 @@ static void WriteBatch(SqlBulkCopy bulk, List<AndroidLog> batch)
 
     bulk.WriteToServer(reader);
 }
-
-
 static AndroidLog? ParseOptimized(string line)
 {
     ReadOnlySpan<char> span = line.AsSpan().Trim();
@@ -89,64 +88,76 @@ static AndroidLog? ParseOptimized(string line)
     if (span.Length < 30)
         return null;
 
-    int colon = span.Slice(20).IndexOf(':');
-    if (colon == -1)
+    int s1 = span.IndexOf(' ');
+    if (s1 < 0) return null;
+
+    int s2 = span.Slice(s1 + 1).IndexOf(' ');
+    if (s2 < 0) return null;
+    s2 += s1 + 1;
+
+    int pStart = s2;
+    while (pStart < span.Length && span[pStart] == ' ') pStart++;
+
+    int pEnd = span.Slice(pStart).IndexOf(' ');
+    if (pEnd < 0) return null;
+    pEnd += pStart;
+
+    if (!int.TryParse(span.Slice(pStart, pEnd - pStart), out int pid))
         return null;
 
-    colon += 20;
+    int tStart = pEnd;
+    while (tStart < span.Length && span[tStart] == ' ') tStart++;
 
-    try
-    {
-        int s1 = span.IndexOf(' ');
-        if (s1 < 0) return null;
+    int tEnd = span.Slice(tStart).IndexOf(' ');
+    if (tEnd < 0) return null;
+    tEnd += tStart;
 
-        int s2 = span.Slice(s1 + 1).IndexOf(' ');
-        if (s2 < 0) return null;
-        s2 += s1 + 1;
-
-        int pStart = s2;
-        while (pStart < span.Length && span[pStart] == ' ') pStart++;
-
-        int pEnd = span.Slice(pStart).IndexOf(' ');
-        if (pEnd < 0) return null;
-        pEnd += pStart;
-
-        if (!int.TryParse(span.Slice(pStart, pEnd - pStart), out int pid))
-            return null;
-
-        int tStart = pEnd;
-        while (tStart < span.Length && span[tStart] == ' ') tStart++;
-
-        int tEnd = span.Slice(tStart).IndexOf(' ');
-        if (tEnd < 0) return null;
-        tEnd += tStart;
-
-        if (!int.TryParse(span.Slice(tStart, tEnd - tStart), out int tid))
-            return null;
-
-        int levelStart = tEnd + 1;
-        int levelEnd = span.Slice(levelStart).IndexOf(' ');
-        if (levelEnd < 0) return null;
-
-        string level = span.Slice(levelStart, levelEnd).Trim().ToString();
-
-        int componentStart = levelStart + levelEnd + 1;
-        string component = span.Slice(componentStart, colon - componentStart).Trim().ToString();
-
-        string content = span.Slice(colon + 1).Trim().ToString();
-
-        return new AndroidLog
-        {
-            LogDate = span.Slice(0, s2).ToString(),
-            Pid = pid,
-            Tid = tid,
-            Level = level,
-            Component = component,
-            Content = content
-        };
-    }
-    catch
-    {
+    if (!int.TryParse(span.Slice(tStart, tEnd - tStart), out int tid))
         return null;
+
+    int levelStart = tEnd + 1;
+    int levelEnd = span.Slice(levelStart).IndexOf(' ');
+    if (levelEnd < 0) return null;
+
+    string level = span.Slice(levelStart, levelEnd).Trim().ToString();
+
+    int componentStart = levelStart + levelEnd + 1;
+
+    int colon = span.Slice(componentStart).IndexOf(':');
+
+    string component;
+    string content;
+
+    if (colon < 0)
+    {
+        component = "UNKNOWN";
+        content = span.Slice(componentStart).Trim().ToString();
     }
+    else
+    {
+        colon += componentStart;
+
+        component = span.Slice(componentStart, colon - componentStart).Trim().ToString();
+
+        if (colon + 1 < span.Length)
+            content = span.Slice(colon + 1).Trim().ToString();
+        else
+            content = string.Empty;
+    }
+
+    if (component.Length == 0)
+        component = "UNKNOWN";
+
+    if (content.Length == 0)
+        content = string.Empty;
+
+    return new AndroidLog
+    {
+        LogDate = span.Slice(0, s2).ToString(),
+        Pid = pid,
+        Tid = tid,
+        Level = level,
+        Component = component,
+        Content = content
+    };
 }

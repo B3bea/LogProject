@@ -5,7 +5,7 @@ string serverIp = "127.0.0.1";
 int serverPort = 5000;
 string rootPath = @"C:\Users\beatriz.francisca\Downloads\Android_v2";
 
-Console.WriteLine("Starting to seach for logs...");
+Console.WriteLine("Starting to search for logs...");
 
 var logFiles = Directory.GetFiles(rootPath, "applogcat.log", SearchOption.AllDirectories);
 

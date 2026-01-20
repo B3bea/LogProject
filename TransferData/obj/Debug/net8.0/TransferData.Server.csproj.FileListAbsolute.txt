@@ -132,3 +132,4 @@ C:\cursoC#\TransferData\TransferData\obj\Debug\net8.0\TransferData.Server.pdb
 C:\cursoC#\TransferData\TransferData\obj\Debug\net8.0\TransferData.Server.genruntimeconfig.cache
 C:\cursoC#\TransferData\TransferData\obj\Debug\net8.0\ref\TransferData.Server.dll
 C:\cursoC#\TransferData\TransferData\bin\Debug\net8.0\FastMember.dll
+C:\cursoC#\TransferData\TransferData\obj\Debug\net8.0\TransferData.Server.sourcelink.json
