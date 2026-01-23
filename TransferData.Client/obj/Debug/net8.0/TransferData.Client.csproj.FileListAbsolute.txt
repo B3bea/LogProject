@@ -16,3 +16,4 @@ C:\cursoC#\TransferData\TransferData.Client\obj\Debug\net8.0\refint\TransferData
 C:\cursoC#\TransferData\TransferData.Client\obj\Debug\net8.0\TransferData.Client.pdb
 C:\cursoC#\TransferData\TransferData.Client\obj\Debug\net8.0\TransferData.Client.genruntimeconfig.cache
 C:\cursoC#\TransferData\TransferData.Client\obj\Debug\net8.0\ref\TransferData.Client.dll
+C:\cursoC#\TransferData\TransferData.Client\obj\Debug\net8.0\TransferData.Client.sourcelink.json

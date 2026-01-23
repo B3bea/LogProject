@@ -13,16 +13,16 @@ Console.WriteLine($"Found {logFiles.Length} log files to be sent.");
 
 try
 {
-    using TcpClient client = new TcpClient(serverIp, serverPort);
-    using NetworkStream ns = client.GetStream();
-    using StreamWriter writer = new StreamWriter(ns, System.Text.Encoding.UTF8, 65536) { AutoFlush = false};
+    using TcpClient client = new TcpClient();
+    client.SendBufferSize = 1024 * 1024;
+    await client.ConnectAsync(serverIp, serverPort);
 
-    Stopwatch sw = Stopwatch.StartNew();
+    using NetworkStream ns = client.GetStream();
+
+    using StreamWriter writer = new StreamWriter(ns, System.Text.Encoding.UTF8, 131072) { AutoFlush = false};
 
     foreach (var file in logFiles)
     {
-        Console.WriteLine($"Sending file: {file}");
-
         using (StreamReader reader = new StreamReader(file))
         {
             string? line;
@@ -33,9 +33,6 @@ try
         }
         writer.Flush();
     }
-
-    sw.Stop();
-    Console.WriteLine($"All log files sent in {sw.Elapsed.TotalSeconds} seconds.");
 }
 catch (Exception ex)
 {

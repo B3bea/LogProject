@@ -1,6 +1,9 @@
 ﻿using FastMember;
 using Microsoft.Data.SqlClient;
 using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
+using System.Threading.Channels;
 using TransferData.Shared;
 
 const int BATCH_SIZE = 200_000;
@@ -8,79 +11,81 @@ const int BATCH_SIZE = 200_000;
 string rootPath = @"C:\Users\beatriz.francisca\Downloads\Android_v2";
 var logFiles = Directory.GetFiles(rootPath, "applogcat.log", SearchOption.AllDirectories);
 
-long total = 0;
+var channel = Channel.CreateBounded<List<AndroidLog>>(new BoundedChannelOptions(20) { FullMode = BoundedChannelFullMode.Wait });
+
 Stopwatch sw = Stopwatch.StartNew();
+long total = 0;
 
-using var conn = new SqlConnection(
-    @"Server=localhost\SQLEXPRESS01;Database=InternalProject;Trusted_Connection=True;TrustServerCertificate=True;");
-conn.Open();
+const int PORT = 5000;
 
-using var bulk = new SqlBulkCopy(
-    conn,
-    SqlBulkCopyOptions.TableLock,
-    null)
+var consumerTask = Task.Run(async () => 
+    {
+        using var conn = new SqlConnection(@"Server=localhost\SQLEXPRESS01;Database=InternalProject;Trusted_Connection=True;TrustServerCertificate=True;");
+        await conn.OpenAsync();
+
+        using var bulk = new SqlBulkCopy(conn, SqlBulkCopyOptions.TableLock, null)
+        {
+            DestinationTableName = "AndroidLog",
+            BatchSize = BATCH_SIZE,
+            BulkCopyTimeout = 0
+        };
+
+        bulk.ColumnMappings.Add("LogDate", "LogDate");
+        bulk.ColumnMappings.Add("Pid", "Pid");
+        bulk.ColumnMappings.Add("Tid", "Tid");
+        bulk.ColumnMappings.Add("Level", "Level");
+        bulk.ColumnMappings.Add("Component", "Component");
+        bulk.ColumnMappings.Add("Content", "Content");
+
+        await foreach (var batch in channel.Reader.ReadAllAsync())
+        {
+            using var reader = ObjectReader.Create(batch, "LogDate", "Pid", "Tid", "Level", "Component", "Content");
+            await bulk.WriteToServerAsync(reader);
+
+            Interlocked.Add(ref total, batch.Count);
+            Console.WriteLine($"{total:N0} logs inseridos | {total / sw.Elapsed.TotalSeconds:N0} reg/s");
+        }
+    }
+);
+
+TcpListener listener = new TcpListener(IPAddress.Any, PORT);
+listener.Start();
+Console.WriteLine("Aguardando conexão do cliente...");
+
+using (TcpClient client = await listener.AcceptTcpClientAsync())
+using (NetworkStream ns = client.GetStream())
+using (StreamReader reader = new StreamReader(ns, System.Text.Encoding.UTF8))
 {
-    DestinationTableName = "AndroidLog",
-    BatchSize = BATCH_SIZE,
-    BulkCopyTimeout = 0
-};
-
-bulk.ColumnMappings.Add("LogDate", "LogDate");
-bulk.ColumnMappings.Add("Pid", "Pid");
-bulk.ColumnMappings.Add("Tid", "Tid");
-bulk.ColumnMappings.Add("Level", "Level");
-bulk.ColumnMappings.Add("Component", "Component");
-bulk.ColumnMappings.Add("Content", "Content");
-
-List<AndroidLog> buffer = new(BATCH_SIZE);
-
-foreach (var file in logFiles)
-{
-    using var reader = new StreamReader(file);
-
+    List<AndroidLog> currentBuffer = new(BATCH_SIZE);
     string? line;
-    while ((line = reader.ReadLine()) != null)
+
+    while ((line = await reader.ReadLineAsync()) != null)
     {
         var log = ParseOptimized(line);
-        if (log == null)
-            continue;
+        if (log is null) continue;
 
-        buffer.Add(log);
+        currentBuffer.Add(log);
 
-        if (buffer.Count >= BATCH_SIZE)
+        if (currentBuffer.Count >= BATCH_SIZE)
         {
-            WriteBatch(bulk, buffer);
-            total += buffer.Count;
-            buffer.Clear();
-
-            Console.WriteLine($"{total:N0} registros | {(total / sw.Elapsed.TotalSeconds):N0} reg/s");
+            await channel.Writer.WriteAsync(currentBuffer);
+            currentBuffer = new List<AndroidLog>(BATCH_SIZE);
         }
+    }
+
+    if (currentBuffer.Count > 0)
+    {
+        await channel.Writer.WriteAsync(currentBuffer);
     }
 }
 
-if (buffer.Count > 0)
-{
-    WriteBatch(bulk, buffer);
-    total += buffer.Count;
-}
+channel.Writer.Complete();
+await consumerTask;
 
 sw.Stop();
 Console.WriteLine($"FINALIZADO: {total:N0} registros em {sw.Elapsed.TotalSeconds:N2}s");
 
-static void WriteBatch(SqlBulkCopy bulk, List<AndroidLog> batch)
-{
-    using var reader = ObjectReader.Create(
-        batch,
-        "LogDate",
-        "Pid",
-        "Tid",
-        "Level",
-        "Component",
-        "Content"
-    );
 
-    bulk.WriteToServer(reader);
-}
 static AndroidLog? ParseOptimized(string line)
 {
     ReadOnlySpan<char> span = line.AsSpan().Trim();

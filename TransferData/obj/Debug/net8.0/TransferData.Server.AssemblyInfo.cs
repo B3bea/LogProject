@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TransferData.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+00b1f0fec9f1da89c8b0ad603a375745710eba46")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d846536c1646f95f08c9ee533b3d899e78367aad")]
 [assembly: System.Reflection.AssemblyProductAttribute("TransferData.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TransferData.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
